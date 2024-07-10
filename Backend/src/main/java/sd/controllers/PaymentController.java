@@ -1,5 +1,6 @@
 package sd.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/")
 public class PaymentController {
+
     private final PaymentService paymentService;
     private final UserRepository userRepository;
 
@@ -33,8 +35,6 @@ public class PaymentController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
     }
-
-
 
     @PostMapping("/payment/create-checkout-session")
     public ResponseEntity<Map<String, String>> createCheckoutSession(@RequestParam int userId) {
@@ -61,19 +61,16 @@ public class PaymentController {
     public ResponseEntity<Map<String, String>> upgradeToPremium1(@RequestParam int userId) {
         try {
             String message = paymentService.upgradeToPremium(userId);
-            if (message.startsWith("Congratulations") ){
+            if (message.startsWith("Congratulations")) {
                 Map<String, String> response = new HashMap<>();
                 response.put("message", message);
                 return ResponseEntity.ok(response);
-            }
-            else if (message.startsWith("Oops") || message.startsWith("Admin") || message.startsWith("You") || message.startsWith("User")) {
+            } else if (message.startsWith("Oops") || message.startsWith("Admin") || message.startsWith("You") || message.startsWith("User")) {
                 System.out.println("BBB" + message);
                 Map<String, String> response = new HashMap<>();
                 response.put("message", message);
                 return ResponseEntity.ok(response);
-            }
-
-            else {
+            } else {
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("message", "Unexpected error occurred.");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
@@ -94,12 +91,10 @@ public class PaymentController {
             return ResponseEntity.status(HttpStatus.OK).body(message);
         } else if (message.startsWith("Oops") || message.startsWith("Admin") || message.startsWith("You") || message.startsWith("User")) {
             System.out.println("BBB" + message);
-//            return message;
             return ResponseEntity.status(HttpStatus.OK).body(message);
         } else {
             System.out.println("CCC" + message);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred.");
-//            return "Unexpected error occurred.";
         }
     }
 }
