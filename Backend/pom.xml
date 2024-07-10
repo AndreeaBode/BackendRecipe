@@ -184,7 +184,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.streamsphere.movieslibrary.MoviesLibraryApplication</mainClass>
+							<mainClass>sd.SdApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
