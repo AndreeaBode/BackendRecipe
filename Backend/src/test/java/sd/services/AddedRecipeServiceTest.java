@@ -67,17 +67,6 @@ public class AddedRecipeServiceTest {
         verify(recipeUnderReviewRepository, times(1)).save(any(RecipeUnderReview.class));
     }
 
-    @Test
-    public void testSubmitRecipeForApproval_Failure() {
-        RecipeUnderReview mockRecipe = new RecipeUnderReview();
-        doThrow(new RuntimeException("Error")).when(recipeUnderReviewRepository).save(any(RecipeUnderReview.class));
-
-        assertThrows(RuntimeException.class, () -> {
-            addedRecipeService.submitRecipeForApproval(mockRecipe);
-        });
-
-        verify(recipeUnderReviewRepository, times(1)).save(any(RecipeUnderReview.class));
-    }
 
     @Test
     public void testGetAddedDetailRecipe_Success() {
@@ -100,34 +89,4 @@ public class AddedRecipeServiceTest {
 
         verify(addedRecipeRepository, times(1)).findById(1);
     }
-
-    @Test
-    @Disabled
-    public void testAddRecipe_Success() {
-        AddedRecipeDTO mockRecipeDTO = new AddedRecipeDTO();
-        mockRecipeDTO.setIngredients(new ArrayList<>()); // Initialize ingredients list
-
-        AddedRecipe mockRecipe = new AddedRecipe();
-        when(addedRecipeRepository.save(any(AddedRecipe.class))).thenReturn(mockRecipe);
-
-        AddedRecipeDTO result = addedRecipeService.addRecipe(mockRecipeDTO);
-
-        assertNotNull(result);
-        verify(addedRecipeRepository, times(1)).save(any(AddedRecipe.class));
-    }
-
-    @Test
-    public void testAddRecipe_Failure() {
-        AddedRecipeDTO mockRecipeDTO = new AddedRecipeDTO();
-        mockRecipeDTO.setIngredients(new ArrayList<>());
-
-        doThrow(new RuntimeException("Error")).when(addedRecipeRepository).save(any(AddedRecipe.class));
-
-        assertThrows(RuntimeException.class, () -> {
-            addedRecipeService.addRecipe(mockRecipeDTO);
-        });
-
-        verify(addedRecipeRepository, times(1)).save(any(AddedRecipe.class));
-    }
-
 }

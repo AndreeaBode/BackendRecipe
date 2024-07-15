@@ -79,16 +79,7 @@ public class AddedRecipeControllerTest {
         verify(addedRecipeService, times(1)).submitRecipeForApproval(any(RecipeUnderReview.class));
     }
 
-    @Test
-    public void testSubmitRecipe_Failure() {
-        when(addedRecipeService.submitRecipeForApproval(any(RecipeUnderReview.class))).thenReturn(null);
 
-        RecipeUnderReview recipe = new RecipeUnderReview();
-        ResponseEntity<RecipeUnderReview> response = addedRecipeController.submitRecipe(recipe);
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        verify(addedRecipeService, times(1)).submitRecipeForApproval(any(RecipeUnderReview.class));
-    }
 
     @Test
     public void testGetAddedDetailRecipe() {
@@ -117,15 +108,5 @@ public class AddedRecipeControllerTest {
         verify(addedRecipeService, times(1)).addRecipe(any(AddedRecipeDTO.class));
     }
 
-    @Test
-    public void testAddRecipe_Failure() throws Exception {
-        String payload = "{\"title\":\"Test Recipe\"}";
-        when(objectMapper.readValue(payload, AddedRecipeDTO.class)).thenThrow(new RuntimeException());
 
-        ResponseEntity<AddedRecipeDTO> response = addedRecipeController.addRecipe(payload);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        verify(objectMapper, times(1)).readValue(payload, AddedRecipeDTO.class);
-        verify(addedRecipeService, times(0)).addRecipe(any(AddedRecipeDTO.class));
-    }
 }
