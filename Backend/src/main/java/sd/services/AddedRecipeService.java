@@ -45,7 +45,7 @@ public class AddedRecipeService {
             return recipe;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error adding recipe: " + e.getMessage());
+            throw new RuntimeException("Error  adding recipe: " + e.getMessage());
         }
     }
 
