@@ -1,0 +1,6 @@
+[phases]
+  [phases.install]
+    command = "./mvnw clean install"
+
+  [phases.start]
+    command = "./mvnw spring-boot:run"
