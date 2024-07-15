@@ -12,6 +12,7 @@ import sd.services.UserService;
 public class SdApplication {
 
 	public static void main(String[] args) {
+
 		ConfigurableApplicationContext context = SpringApplication.run(SdApplication.class, args);
 
 		UserService userService = context.getBean(UserService.class);
