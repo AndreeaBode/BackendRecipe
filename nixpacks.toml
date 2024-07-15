@@ -1,5 +1,0 @@
-[phases.install]
-cmds = ["./Backend/mvnw clean install"]
-
-[phases.start]
-cmd = "./mvnw spring-boot:run"
