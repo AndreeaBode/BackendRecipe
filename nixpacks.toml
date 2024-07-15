@@ -2,4 +2,4 @@
 cmds = ["./Backend/mvnw clean install"]
 
 [phases.start]
-cmd = "java -jar Backend/target/user_backend.jar"
+cmd = "./mvnw spring-boot:run"
