@@ -1,3 +1,5 @@
-[phases]
-install = "./Backend/mvnw clean install"
-start = "java -jar Backend/target/user_backend.jar"
+[phases.install]
+cmds = ["./Backend/mvnw clean install"]
+
+[phases.start]
+cmd = "java -jar Backend/target/user_backend.jar"
