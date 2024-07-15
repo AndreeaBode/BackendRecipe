@@ -1,6 +1,7 @@
 package sd.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -36,6 +37,12 @@ public class AdvancedRecipeService {
     public ResponseEntity<String> searchFoodAdvanced(SearchFoodOptions options, int userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        System.out.println();
+        System.out.println("Admin " + user.isAdmin());
+        System.out.println("Premium " + user.isPremium());
+        System.out.println("Can " + canPerformNormalSearch(user));
+        System.out.println();
 
         if (user.isAdmin() || user.isPremium() || canPerformNormalSearch(user)) {
             try {
@@ -99,21 +106,21 @@ public class AdvancedRecipeService {
                 RestTemplate restTemplate = new RestTemplate();
                 ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
 
-
                 if (user.getRole().equalsIgnoreCase("User")) {
                     user.setWeeklyRequestCount(user.getWeeklyRequestCount() + 1);
                     user.setLastRequestTime(LocalDateTime.now());
                     userRepository.save(user);
                 }
-                
+
                 return responseEntity;
             } catch (Exception e) {
                 e.printStackTrace();
-                return ResponseEntity.status(500).body("Error processing the request.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing the request.");
             }
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is not authorized to perform this action");
     }
+
     private boolean isAdmin(User user) {
         return user.getRole().equalsIgnoreCase("Admin");
     }

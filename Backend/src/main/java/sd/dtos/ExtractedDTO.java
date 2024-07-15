@@ -144,7 +144,6 @@ public class ExtractedDTO {
         this.unitPerServing = unitPerServing;
     }
 
-    // Metodă toString pentru a reprezenta obiectul ca un string
     @Override
     public String toString() {
         return "ExtractedDTO{" +

@@ -126,7 +126,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>2.7.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -185,7 +184,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>sd.SdApplication</mainClass>
+							<mainClass>com.streamsphere.movieslibrary.MoviesLibraryApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

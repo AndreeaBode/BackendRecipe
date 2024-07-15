@@ -29,6 +29,8 @@ public class PaymentService {
     @Value("${stripe.api.key}")
     private String stripeApiKey;
 
+    @Value("${stripe.webhook.secret}")
+    private String stripeWebhookSecret;
 
     public PaymentService(UserRepository userRepository, UserPremiumRepository userPremiumRepository) {
         this.userRepository = userRepository;

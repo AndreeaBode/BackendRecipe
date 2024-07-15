@@ -46,9 +46,6 @@ public class User {
         this.lastRequestTime = LocalDateTime.now(); 
     }
 
-    public boolean isAdmin() {
-        return "admin".equals(role);
-    }
 
     public boolean isPremium() {
         if(getRole().equals("Premium")){
@@ -103,5 +100,9 @@ public class User {
 
     public void setWeeklyRequestCount(int weeklyRequestCount) {
         this.weeklyRequestCount = weeklyRequestCount;
+    }
+
+    public boolean isAdmin() {
+        return "Admin".equalsIgnoreCase(this.role);
     }
 }

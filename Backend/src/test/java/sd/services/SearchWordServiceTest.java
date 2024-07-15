@@ -31,7 +31,6 @@ class SearchWordServiceTest {
 
     @Test
     void testSearchByDishType() {
-        // Given
         String dishType = "breakfast";
         List<ExtractedRecipe> recipes = new ArrayList<>();
         recipes.add(new ExtractedRecipe(1, "Recipe 1", "image-url-1", List.of(dishType), List.of("vegetarian")));
@@ -39,10 +38,8 @@ class SearchWordServiceTest {
 
         when(extractedRecipeRepository.findByDishTypesContaining(anyString())).thenReturn(recipes);
 
-        // When
         List<ExtractedRecipeDTO> result = searchWordService.searchByDishType(dishType);
 
-        // Then
         assertEquals(recipes.size(), result.size());
         assertEquals(recipes.get(0).getTitle(), result.get(0).getTitle());
         assertEquals(recipes.get(1).getTitle(), result.get(1).getTitle());
