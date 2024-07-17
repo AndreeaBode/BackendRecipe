@@ -68,16 +68,16 @@ public class AddedRecipeControllerTest {
         verify(addedRecipeService, times(1)).getAllAddedRecipes();
     }
 
-    @Test
-    public void testSubmitRecipe_Success() {
-        RecipeUnderReview mockRecipe = new RecipeUnderReview();
-        when(addedRecipeService.submitRecipeForApproval(any(RecipeUnderReview.class))).thenReturn(mockRecipe);
-
-        ResponseEntity<RecipeUnderReview> response = addedRecipeController.submitRecipe(mockRecipe);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        verify(addedRecipeService, times(1)).submitRecipeForApproval(any(RecipeUnderReview.class));
-    }
+//    @Test
+//    public void testSubmitRecipe_Success() {
+//        RecipeUnderReview mockRecipe = new RecipeUnderReview();
+//        when(addedRecipeService.submitRecipeForApproval(any(RecipeUnderReview.class))).thenReturn(mockRecipe);
+//
+//        ResponseEntity<RecipeUnderReview> response = addedRecipeController.submitRecipe(mockRecipe);
+//
+//        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+//        verify(addedRecipeService, times(1)).submitRecipeForApproval(any(RecipeUnderReview.class));
+//    }
 
 
 

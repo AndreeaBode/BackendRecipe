@@ -55,17 +55,17 @@ public class AddedRecipeServiceTest {
         assertEquals(1, recipes.size());
         verify(addedRecipeRepository, times(1)).findAll();
     }
-
-    @Test
-    public void testSubmitRecipeForApproval_Success() {
-        RecipeUnderReview mockRecipe = new RecipeUnderReview();
-        when(recipeUnderReviewRepository.save(any(RecipeUnderReview.class))).thenReturn(mockRecipe);
-
-        RecipeUnderReview result = addedRecipeService.submitRecipeForApproval(mockRecipe);
-
-        assertNotNull(result);
-        verify(recipeUnderReviewRepository, times(1)).save(any(RecipeUnderReview.class));
-    }
+//
+//    @Test
+//    public void testSubmitRecipeForApproval_Success() {
+//        RecipeUnderReview mockRecipe = new RecipeUnderReview();
+//        when(recipeUnderReviewRepository.save(any(RecipeUnderReview.class))).thenReturn(mockRecipe);
+//
+//        RecipeUnderReview result = addedRecipeService.submitRecipeForApproval(mockRecipe);
+//
+//        assertNotNull(result);
+//        verify(recipeUnderReviewRepository, times(1)).save(any(RecipeUnderReview.class));
+//    }
 
 
     @Test

@@ -32,7 +32,7 @@ public class AddedRecipeService {
                 .collect(Collectors.toList());
     }
 
-    public RecipeUnderReview submitRecipeForApproval(RecipeUnderReview recipe) {
+    public ResponseEntity<String> submitRecipeForApproval(RecipeUnderReview recipe) {
         try {
 
             String title = recipe.getTitle();
@@ -40,9 +40,7 @@ public class AddedRecipeService {
             List<RecipeUnderReviewIngredient> ingredients = recipe.getIngredients();
             List<RecipeUnderReviewStep> instructions = recipe.getInstructions();
 
-            saveRecipeUnderReview(title, image, ingredients, instructions);
-
-            return recipe;
+            return saveRecipeUnderReview(title, image, ingredients, instructions);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error  adding recipe: " + e.getMessage());
