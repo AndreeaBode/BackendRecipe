@@ -51,9 +51,9 @@ public class AddedRecipeService {
 
     private ResponseEntity<String> saveRecipeUnderReview(String title, String image, List<RecipeUnderReviewIngredient> ing, List<RecipeUnderReviewStep> instructions) {
         try {
-                if (addedRecipeRepository.existsByTitle(title)) {
-                    return ResponseEntity.status(HttpStatus.CONFLICT).body("A recipe with the same title already exists.");
-                }
+            if (addedRecipeRepository.existsByTitle(title)) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("A recipe with the same title already exists.");
+            }
 
             RecipeUnderReview recipeUnderReview = new RecipeUnderReview();
             recipeUnderReview.setTitle(title);
@@ -65,7 +65,7 @@ public class AddedRecipeService {
                 RecipeUnderReviewIngredient ultimulElement = ingredients.get(ingredients.size() - 1);
                 ingredients.remove(ingredients.size() - 1);
                 ingredients.add(0, ultimulElement);
-                System.out.println("Ing" + "  "+ingredients.toString());
+                System.out.println("Ing" + "  " + ingredients.toString());
             } else {
                 System.out.println("Lista de ingrediente este goală.");
             }
@@ -75,7 +75,7 @@ public class AddedRecipeService {
                 RecipeUnderReviewStep ultimulElement = step.get(step.size() - 1);
                 step.remove(step.size() - 1);
                 step.add(0, ultimulElement);
-                System.out.println("Ing" + "  "+step);
+                System.out.println("Ing" + "  " + step);
             } else {
                 System.out.println("Lista de ingrediente este goală.");
             }
@@ -89,14 +89,19 @@ public class AddedRecipeService {
 
             recipeUnderReview.setIngredients(ingredients);
             recipeUnderReview.setInstructions(step);
-            recipeUnderReviewRepository.save(recipeUnderReview);
-            return ResponseEntity.ok("Recipe saved successfully");
+            try {
+                recipeUnderReviewRepository.save(recipeUnderReview);
+                return ResponseEntity.ok("Recipe saved successfully");
+            } catch (Exception e) {
+                    throw new RuntimeException(e);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error saving recipe: " + e.getMessage());
         }
     }
+
     public AddedRecipeDTO getAddedDetailRecipe(int id) {
         Optional<AddedRecipe> addedRecipeOptional = addedRecipeRepository.findById(id);
         if (addedRecipeOptional.isPresent()) {
@@ -108,6 +113,7 @@ public class AddedRecipeService {
             throw new RuntimeException("Recipe not found with id: " + id);
         }
     }
+
     public AddedRecipeDTO addRecipe(AddedRecipeDTO recipeDTO) {
         try {
 
