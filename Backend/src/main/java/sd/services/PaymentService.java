@@ -67,7 +67,6 @@ public class PaymentService {
     public String createCheckoutSession(int userId) throws StripeException {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Stripe.apiKey = stripeApiKey;
-
         SessionCreateParams params = SessionCreateParams.builder()
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .setMode(SessionCreateParams.Mode.PAYMENT)
