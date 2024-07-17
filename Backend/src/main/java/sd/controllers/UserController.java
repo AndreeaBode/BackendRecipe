@@ -41,7 +41,7 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody RegisterDTO model) {
         User user = userService.register(model);
         if (user == null) {
-            
+
             return ResponseEntity.badRequest().body("Registration failed.");
         }
 

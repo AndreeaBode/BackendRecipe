@@ -11,6 +11,7 @@ import sd.services.AddedRecipeService;
 import sd.services.NewsletterService;
 
 import java.util.List;
+
 @RestController
 @RequestMapping(value = "/")
 
@@ -36,18 +37,16 @@ public class AddedRecipeController {
 
     @PostMapping("/submit")
     public ResponseEntity<RecipeUnderReview> submitRecipe(@RequestBody RecipeUnderReview recipe) {
-        RecipeUnderReview savedRecipe = addedRecipeService.submitRecipeForApproval(recipe);
+        try {
+            RecipeUnderReview savedRecipe = addedRecipeService.submitRecipeForApproval(recipe);
 
-        if (savedRecipe != null) {
-            System.out.println(savedRecipe.toString());
-
-            try {
+            if (savedRecipe != null) {
+                System.out.println(savedRecipe.toString());
                 return new ResponseEntity<>(HttpStatus.CREATED);
-            } catch (Exception e) {
+            }else{
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } else {
-            System.out.println("error");
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -56,7 +55,7 @@ public class AddedRecipeController {
     @GetMapping("/added-detail/{id}")
     public ResponseEntity<AddedRecipeDTO> getAddedDetailRecipe(@PathVariable("id") int id) {
         AddedRecipeDTO addedRecipeDTO = addedRecipeService.getAddedDetailRecipe(id);
-        return new ResponseEntity<>(addedRecipeDTO,HttpStatus.OK);
+        return new ResponseEntity<>(addedRecipeDTO, HttpStatus.OK);
     }
 
     @PostMapping("/add")
