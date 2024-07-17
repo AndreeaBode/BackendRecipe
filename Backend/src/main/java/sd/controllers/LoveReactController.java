@@ -40,7 +40,12 @@ public class LoveReactController {
         System.out.println("User" + " " + userId);
         System.out.println("Recipe" + " " + recipeId);
         LoveReact savedLoveReact = loveReactService.saveLoveReact(userId, recipeId, recipeName);
-        return new ResponseEntity<>(savedLoveReact, HttpStatus.CREATED);
+
+        try {
+            return new ResponseEntity<>(savedLoveReact, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/likes/{userId}/{recipeId}/{name}")

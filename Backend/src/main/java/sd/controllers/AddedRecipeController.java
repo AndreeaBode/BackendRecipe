@@ -40,7 +40,12 @@ public class AddedRecipeController {
 
         if (savedRecipe != null) {
             System.out.println(savedRecipe.toString());
-            return new ResponseEntity<>(HttpStatus.CREATED);
+
+            try {
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } else {
             System.out.println("error");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,7 +64,12 @@ public class AddedRecipeController {
         try {
             AddedRecipeDTO recipeDTO = objectMapper.readValue(payload, AddedRecipeDTO.class);
             AddedRecipeDTO addedRecipeDTO = addedRecipeService.addRecipe(recipeDTO);
-            return ResponseEntity.ok(addedRecipeDTO);
+
+            try {
+                return ResponseEntity.ok(addedRecipeDTO);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

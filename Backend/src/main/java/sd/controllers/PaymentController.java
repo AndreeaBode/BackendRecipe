@@ -43,11 +43,19 @@ public class PaymentController {
             if (sessionUrl != null) {
                 Map<String, String> response = new HashMap<>();
                 response.put("url", sessionUrl);
-                return ResponseEntity.ok(response);
+                try {
+                    return ResponseEntity.ok(response);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             } else {
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("error", "Failed to create checkout session");
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+                try {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,19 +72,34 @@ public class PaymentController {
             if (message.startsWith("Congratulations") ){
                 Map<String, String> response = new HashMap<>();
                 response.put("message", message);
+                try {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                } catch (Exception e) {
+
+                }
                 return ResponseEntity.ok(response);
             }
             else if (message.startsWith("Oops") || message.startsWith("Admin") || message.startsWith("You") || message.startsWith("User")) {
                 System.out.println("BBB" + message);
                 Map<String, String> response = new HashMap<>();
                 response.put("message", message);
-                return ResponseEntity.ok(response);
+
+                try {
+                    return ResponseEntity.ok(response);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
 
             else {
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("message", "Unexpected error occurred.");
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+
+                try {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

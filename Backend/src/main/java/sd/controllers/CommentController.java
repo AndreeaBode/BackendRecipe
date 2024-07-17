@@ -29,7 +29,13 @@ public class CommentController {
                                               @PathVariable("username") String username,
                                               @PathVariable("additionalPath") String additionalPath,
                                               @RequestBody Comment comment) {
-        return commentService.addComment(recipeId, userId, username,additionalPath, comment);
+
+
+        try {
+            return commentService.addComment(recipeId, userId, username,additionalPath, comment);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Transactional

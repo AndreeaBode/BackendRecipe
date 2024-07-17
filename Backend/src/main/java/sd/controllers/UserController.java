@@ -48,7 +48,12 @@ public class UserController {
         LoginResponseDTO tokenResponse = new LoginResponseDTO(token);
 
         System.out.println(ResponseEntity.ok(tokenResponse));
-        return ResponseEntity.ok(tokenResponse);
+        try {
+            return ResponseEntity.ok(tokenResponse);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PostMapping("/login")

@@ -20,7 +20,12 @@ public class NewsletterController {
     public ResponseEntity<String> handleSubscribeRequest(@RequestBody String email) {
         System.out.println("EMAIL " + email);
         String message = newsletterService.s(email);
-        return ResponseEntity.ok(message);
+
+        try {
+            return ResponseEntity.ok(message);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
