@@ -38,14 +38,8 @@ public class AddedRecipeController {
     @PostMapping("/submit")
     public ResponseEntity<RecipeUnderReview> submitRecipe(@RequestBody RecipeUnderReview recipe) {
         try {
-            RecipeUnderReview savedRecipe = addedRecipeService.submitRecipeForApproval(recipe);
-
-            if (savedRecipe != null) {
-                System.out.println(savedRecipe.toString());
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            }else{
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            addedRecipeService.submitRecipeForApproval(recipe);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
