@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class PredictionService {
 
-    private final String apiUrl = "https://licenta-model-92ff946e2e32.herokuapp.com/predict"; // Sau URL-ul către serviciul tău Spring Boot
+    private final String apiUrl = "https://licenta-model-92ff946e2e32.herokuapp.com/predict";
 
     private final RestTemplate restTemplate;
 
