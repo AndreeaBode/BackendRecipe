@@ -29,10 +29,10 @@ public class RecipeUnderReviewController {
     }
 
     @DeleteMapping("/delete/under-review/{recipeId}")
-    public ResponseEntity<?> deleteRecipeUnderReview(@PathVariable int recipeId) {
+    public ResponseEntity<String> deleteRecipeUnderReview(@PathVariable int recipeId) {
         try {
             recipeUnderReviewService.deleteRecipeUnderReview(recipeId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Succes");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting recipe: " + e.getMessage());
         }
