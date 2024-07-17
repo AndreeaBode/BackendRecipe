@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import sd.entities.Comment;
 import sd.entities.Review;
 import sd.services.ReviewService;
 
@@ -32,18 +31,21 @@ public class ReviewController {
                                                     @PathVariable("additionalPath") String additionalPath,
                                                     @RequestBody Review review) {
 
-        reviewService.addReviewToRecipe(recipeId, userId, username, additionalPath, review);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            return reviewService.addReviewToRecipe(recipeId, userId, username, additionalPath, review);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("getReview/{username}/{recipeId}/{additionalPath}")
-    public ResponseEntity<List<Review>> getReviewByRecipeId( @PathVariable("username") String username, @PathVariable int recipeId, @PathVariable("additionalPath") String additionalPath) {
+    public ResponseEntity<List<Review>> getReviewByRecipeId(@PathVariable("username") String username, @PathVariable int recipeId, @PathVariable("additionalPath") String additionalPath) {
         List<Review> reviews = reviewService.getReviewByRecipeId(username, recipeId, additionalPath);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     @GetMapping("checkReview/{userId}/{recipeId}/{additionalPath}")
-    public ResponseEntity<Optional<Review>> getCheckReview( @PathVariable("userId") int userId, @PathVariable int recipeId, @PathVariable("additionalPath") String additionalPath) {
+    public ResponseEntity<Optional<Review>> getCheckReview(@PathVariable("userId") int userId, @PathVariable int recipeId, @PathVariable("additionalPath") String additionalPath) {
         Optional<Review> reviews = reviewService.getCheckReview(userId, recipeId, additionalPath);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
@@ -56,8 +58,6 @@ public class ReviewController {
                                                        @RequestBody Review updatedReview) {
         return reviewService.updateReviewOfRecipe(recipeId, userId, username, additionalPath, updatedReview);
     }
-
-
 
 
 }
